@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify, render_template
 from openpyxl import load_workbook
+import os
 
-app = Flask(__name__)
+# Tell Flask to look for templates in the current directory
+app = Flask(__name__, template_folder='.')
 
 @app.route('/')
 def index():
@@ -10,7 +12,7 @@ def index():
 @app.route('/calculate', methods=['POST'])
 def calculate():
     input_value = float(request.json['input'])
-    
+
     wb = load_workbook('template.xlsx')
     ws = wb.active
     ws['A1'] = input_value
